@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Card with Infinite Confetti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #ffe259, #ffa751);
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .card {
+      width: 640px;
+      height: 400px;
+      perspective: 1200px;
+      transition: transform 1s ease;
+      position: relative;
+      z-index: 10;
+    }
+    .card:hover {
+      transform: rotate(-3deg);
+    }
+    .card:hover .outside {
+      transform: rotateY(-130deg);
+    }
+
+    .outside, .inside {
+      height: 100%;
+      width: 50%;
+      position: absolute;
+      left: 50%;
+    }
+    .inside {
+      background: linear-gradient(135deg, #fff6e7, #ffe4f0);
+      line-height: 1.6;
+      padding: 0 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+      left: 50%;
+    }
+    .inside p {
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .inside h1 {
+      font-size: 100px;
+      line-height: 100px;
+      margin-top: 10px;
+      animation: pop 1s ease infinite alternate;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+
+    .outside {
+      transform-style: preserve-3d;
+      z-index: 1;
+      transform-origin: left;
+      transition: transform 2s ease;
+      cursor: pointer;
+    }
+    .front, .back {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+    }
+    .front {
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px 0 0 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .front p {
+      font-size: 28px;
+      font-family: "Pacifico", cursive;
+      color: #ff4081;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      word-spacing: 1.5em;
+    }
+    .back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, #fff6e7, #ffe4f0);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .cake {
+      margin-top: 20px;
+      position: relative;
+    }
+    .top-layer, .middle-layer, .bottom-layer {
+      height: 80px;
+      width: 240px;
+      border-radius: 10px;
+      margin: auto;
+      position: relative;
+      background: repeating-linear-gradient(45deg, #ffd6d6 0, #ffd6d6 10px, #ffb6b6 10px, #ffb6b6 20px);
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    .middle-layer { transform: scale(0.85); top: -10px; }
+    .top-layer { transform: scale(0.7); top: -20px; }
+
+    .candle {
+      height: 50px;
+      width: 15px;
+      background: repeating-linear-gradient(45deg, #fd3018 0, #fd3018 5px, #ffa89e 5px, #ffa89e 10px);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-123%);
+      top: -70px;
+      border-radius: 3px;
+    }
+    .candle::before {
+      content: "";
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      background: radial-gradient(circle, #ffeb3b 0%, #ff9800 70%);
+      border-radius: 50%;
+      top: -15px;
+      left: -2px;
+      animation: flame 0.3s infinite alternate;
+      box-shadow: 0 0 10px rgba(255,200,0,0.6);
+    }
+
+    @keyframes flame {
+      from { transform: scale(1) rotate(0deg); opacity: 1; }
+      to { transform: scale(1.1) rotate(-5deg); opacity: 0.8; }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @media (max-width: 700px) {
+      .card {
+        width: 90%;
+        height: 300px;
+      }
+      
+      .front p {
+        font-size: 22px;
+      }
+      
+      .inside p {
+        font-size: 16px;
+      }
+      
+      .inside h1 {
+        font-size: 70px;
+        line-height: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="outside">
+      <div class="front">
+        <p>Happy Birthday</p>
+        <div class="cake">
+          <div class="top-layer"></div>
+          <div class="middle-layer"></div>
+          <div class="bottom-layer"></div>
+          <div class="candle"></div>
+        </div>
+      </div>
+      <div class="back"></div>
+    </div>
+    <div class="inside">
+  <h2 style="font-family: 'Pacifico', cursive; color: #ff4081; font-size: 1.5rem; margin-bottom: 15px;">
+    🎉 ¡Happy Birthday! 🎉
+  </h2>
+  <p style="max-width: 400px; font-size: 1.1rem; color: #444;">
+    
+    feliz cumpleaños Sully,espero te la pases increible en tu cumpleaños
+    gracias por los buenos momentos y las personas que encuentres en tu vida te hagan feliz
+    y estes donde estes siempre tendras un espacio en mi corazon
+
+  </p>
+  <img src="https://i.pinimg.com/736x/2e/3f/5c/2e3f5cf9ae25855e16a617e48d5b8c45.jpg"
+  alt="Pastel" style="width: 120px; margin-top: 20px;">
+  <p style="margin-top: 10px; font-size: 1rem; color: #28C4FA; font-weight: bold;">💖 Con todo mi cariño 💖
+  </p>
+</div>
+
+  </div>
+
+  <script>
+    const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ff8e8e', '#7bed9f', '#70a1ff', '#ff7f50'];
+    const confettiPieces = [];
+    const maxConfetti = 200; 
+    
+    function createConfetti(x, y, isInfinite = false) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      
+      if (isInfinite) {
+        confetti.style.left = (x || Math.random() * window.innerWidth) + 'px';
+        confetti.style.top = '-20px';
+      } else {
+        confetti.style.left = x + 'px';
+        confetti.style.top = y + 'px';
+      }
+      
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.opacity = '1';
+      
+      const shapes = ['circle', 'square', 'triangle'];
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      const size = 5 + Math.random() * 10;
+      
+      if (shape === 'circle') {
+        confetti.style.borderRadius = '50%';
+        confetti.style.width = `${size}px`;
+        confetti.style.height = `${size}px`;
+      } else if (shape === 'triangle') {
+        confetti.style.width = '0';
+        confetti.style.height = '0';
+        confetti.style.backgroundColor = 'transparent';
+        confetti.style.borderLeft = `${size/2}px solid transparent`;
+        confetti.style.borderRight = `${size/2}px solid transparent`;
+        confetti.style.borderBottom = `${size}px solid ${colors[Math.floor(Math.random() * colors.length)]}`;
+      } else {
+        confetti.style.width = `${size}px`;
+        confetti.style.height = `${size}px`;
+      }
+      
+      document.body.appendChild(confetti);
+      
+      const angle = isInfinite ? (Math.random() * Math.PI/3 - Math.PI/6) : (Math.random() * Math.PI * 2);
+      const velocity = isInfinite ? (1 + Math.random() * 3) : (2 + Math.random() * 4);
+      const rotation = Math.random() * 360;
+      const rotationSpeed = (Math.random() - 0.5) * 20;
+      const fallSpeed = 1 + Math.random() * 2;
+      
+      let posX = parseFloat(confetti.style.left);
+      let posY = parseFloat(confetti.style.top);
+      let currentRotation = rotation;
+      let opacity = 1;
+      let scale = 0.5 + Math.random();
+      
+      confetti.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+      
+      const animate = () => {
+        posX += Math.cos(angle) * velocity;
+        posY += Math.sin(angle) * velocity + fallSpeed;
+        currentRotation += rotationSpeed;
+        
+        if (isInfinite && posY > window.innerHeight) {
+          posY = -20;
+          posX = Math.random() * window.innerWidth;
+          opacity = 1;
+          scale = 0.5 + Math.random();
+        } 
+        else if (!isInfinite) {
+          opacity -= 0.008;
+          scale *= 0.99;
+        }
+        
+        confetti.style.left = posX + 'px';
+        confetti.style.top = posY + 'px';
+        confetti.style.transform = `rotate(${currentRotation}deg) scale(${scale})`;
+        confetti.style.opacity = opacity;
+        
+        if (opacity > 0 || isInfinite) {
+          requestAnimationFrame(animate);
+        } else {
+          confetti.remove();
+          const index = confettiPieces.indexOf(confetti);
+          if (index > -1) {
+            confettiPieces.splice(index, 1);
+          }
+        }
+      };
+      
+      requestAnimationFrame(animate);
+      
+      if (isInfinite) {
+        confettiPieces.push(confetti);
+        if (confettiPieces.length > maxConfetti) {
+          const oldConfetti = confettiPieces.shift();
+          if (oldConfetti && oldConfetti.parentNode) {
+            oldConfetti.remove();
+          }
+        }
+      }
+      
+      return confetti;
+    }
+    
+    function startInfiniteConfetti() {
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          createConfetti(null, null, true);
+        }, i * 100);
+      }
+      
+      setInterval(() => {
+        if (confettiPieces.length < maxConfetti) {
+          createConfetti(null, null, true);
+        }
+      }, 200);
+    }
+    
+    document.addEventListener('click', function(e) {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          createConfetti(e.clientX, e.clientY, false);
+        }, i * 50);
+      }
+    });
+    
+    window.addEventListener('load', function() {
+      startInfiniteConfetti();
+      
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          createConfetti(
+            window.innerWidth / 2,
+            window.innerHeight / 2,
+            false
+          );
+        }, i * 50);
+      }
+    });
+    
+    // Ajustar confeti cuando cambia el tamaño de la ventana
+    window.addEventListener('resize', function() {
+      confettiPieces.forEach(confetti => {
+        if (parseFloat(confetti.style.top) > window.innerHeight) {
+          confetti.style.top = '-20px';
+          confetti.style.left = Math.random() * window.innerWidth + 'px';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
